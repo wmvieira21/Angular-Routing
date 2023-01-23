@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <p>Break the system. It does not exist a route /servers/servers, Take a look onReloadPage</p>
+            <button class="btn btn-primary" (click)="onReloadPage()">Reload page</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="list-group">
+                <a class="list-group-item" *ngFor="let server of serversLocal" [routerLink]="['/servers',server.id]"
+                    [queryParams]="{allowEdit: '1'}" fragment='loading'>
+                    {{server.serverName}} - ID ({{server.id}}) - Status ({{server.status}})</a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

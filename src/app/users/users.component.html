@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8 col-sm-2">
+            <div class="list-group">
+                <a class="list-group-item" *ngFor="let userElem of users"
+                    [routerLink]="['/users', userElem.id, userElem.name]">
+                    <p>ID: {{userElem.id}} - {{userElem.name}}</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <router-outlet></router-outlet>
+            <!--app.module Routes. Necessarie to build the children componentes
+            { path: ':id/:name', component: UserComponent }-->
+        </div>
+    </div>
+</div>
