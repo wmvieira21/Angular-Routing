@@ -10,7 +10,7 @@
         <div class="col-xs-12 col-sm-4">
             <div class="list-group">
                 <a class="list-group-item" *ngFor="let server of serversLocal" [routerLink]="['/servers',server.id]"
-                    [queryParams]="{allowEdit: '1'}" fragment='loading'>
+                    [queryParams]="{allowEdit: server.id === 3 ? '1' : '0'}" fragment='loading'>
                     {{server.serverName}} - ID ({{server.id}}) - Status ({{server.status}})</a>
             </div>
         </div>

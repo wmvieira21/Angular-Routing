@@ -9,26 +9,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './users/user/user.component';
 import { ServerEditComponent } from './servers/server-edit/server-edit.component';
 import { ServerComponent } from './servers/server/server.component';
-
-const appRouter: Routes = [
-  { path: '', component: HomeComponent },
-
-  {
-    path: 'servers', component: ServersComponent, children: [
-      { path: ':id/edit', component: ServerEditComponent },
-      { path: ':id', component: ServerComponent, }
-      /*dont forget to define the router-outlet in the html file*/
-    ]
-  },
-
-
-  {
-    path: 'users', component: UsersComponent, children: [
-      { path: ':id/:name', component: UserComponent }
-      /*dont forget to define the router-outlet in the html file*/
-    ]
-  }
-];
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -38,11 +20,12 @@ const appRouter: Routes = [
     ServersComponent,
     UserComponent,
     ServerEditComponent,
-    ServerComponent
+    ServerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRouter)
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
