@@ -20,6 +20,6 @@ export class ServersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.serversLocal = this.serversService.servers;
+    this.serversLocal = this.serversService.getServers();
   }
 }

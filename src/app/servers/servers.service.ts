@@ -1,7 +1,7 @@
 export class ServersService {
-    servers: { serverName: string, id: number, status: string }[] = [
+    private servers: { serverName: string, id: number, status: string }[] = [
         { serverName: 'ServerTest', id: 1, status: 'offline' },
-        { serverName: 'ServerProduction', id: 2, status: 'offline' },
+        { serverName: 'ServerProduction', id: 2, status: 'online' },
         { serverName: 'ServerHomo', id: 3, status: 'offline' }];
 
     getServers() {

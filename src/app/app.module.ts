@@ -8,6 +8,7 @@ import { ServersComponent } from './servers/servers.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './users/user/user.component';
 import { ServerEditComponent } from './servers/server-edit/server-edit.component';
+import { ServerComponent } from './servers/server/server.component';
 
 const appRouter: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,7 @@ const appRouter: Routes = [
   {
     path: 'servers', component: ServersComponent, children: [
       { path: ':id/edit', component: ServerEditComponent },
-      { path: ':id', component: ServerEditComponent, }
+      { path: ':id', component: ServerComponent, }
       /*dont forget to define the router-outlet in the html file*/
     ]
   },
@@ -36,7 +37,8 @@ const appRouter: Routes = [
     UsersComponent,
     ServersComponent,
     UserComponent,
-    ServerEditComponent
+    ServerEditComponent,
+    ServerComponent
   ],
   imports: [
     BrowserModule,
