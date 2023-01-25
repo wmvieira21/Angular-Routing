@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ServersService } from '../servers.service';
+import { CanComponentDeactivate } from './can-deactivate-guard-service';
 
 @Component({
   selector: 'app-server-edit',
@@ -9,14 +10,19 @@ import { ServersService } from '../servers.service';
   styleUrls: ['./server-edit.component.css'],
   providers: [ServersService]
 })
-export class ServerEditComponent implements OnInit, OnDestroy {
-  serverLoaded = { serverName: String, id: Number, status: String };
+export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+
+  serverLoaded = { serverName: '', id: 0, status: '' };
   @ViewChild('statusValue') statusValue: any;
+
+  serverNameEdit = '';
+
   queryParamsSubscription = new Subscription();
   fragmentSubscription = new Subscription();
   allowEdit = false;
+  savedChanges = false;
 
-  constructor(private route: ActivatedRoute, private serversService: ServersService) { }
+  constructor(private route: ActivatedRoute, private serversService: ServersService, private router: Router) { }
 
   ngOnInit(): void {
     /*Retiveve the query params or fragment
@@ -32,6 +38,7 @@ export class ServerEditComponent implements OnInit, OnDestroy {
 
     /*+ indica que o id é um number*/
     this.getServerById(+this.route.snapshot.params['id']);
+
     this.route.params.subscribe((param) => {
       this.getServerById(param['id']);
     }
@@ -39,10 +46,25 @@ export class ServerEditComponent implements OnInit, OnDestroy {
   }
   getServerById(id: number) {
     this.serverLoaded = this.serversService.getServersById(id);
+    this.serverNameEdit = this.serverLoaded.serverName;
   }
 
-  select() {
-    console.log('select=' + this.statusValue.nativeElement.value);
+  updateServer() {
+    this.savedChanges = true;
+    this.router.navigate(['../'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
+  }
+
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this.allowEdit) {
+      return true;
+    }
+    
+    if (this.serverNameEdit !== this.serverLoaded.serverName
+      && !this.savedChanges) {
+      return confirm('Are you sure you want to exit?');
+    }
+    return true;
   }
 
   ngOnDestroy(): void {
