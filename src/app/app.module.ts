@@ -15,6 +15,8 @@ import { AuthService } from './auth.service';
 import { CanDeactivateGuard } from './servers/server-edit/can-deactivate-guard-service';
 import { FormsModule } from '@angular/forms';
 import { ServersService } from './servers/servers.service';
+import { ErrorComponent } from './error/error.componenet';
+import { ServerResolver } from './servers/server/server.resolver.service';
 
 @NgModule({
   declarations: [
@@ -25,14 +27,15 @@ import { ServersService } from './servers/servers.service';
     UserComponent,
     ServerEditComponent,
     ServerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [AuthGuard, AuthService, CanDeactivateGuard, ServersService],
+  providers: [AuthGuard, AuthService, CanDeactivateGuard, ServersService, ServerResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

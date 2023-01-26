@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { ServersService } from '../servers.service';
 
 @Component({
@@ -21,6 +21,14 @@ export class ServerComponent implements OnInit {
       this.id = +param['id'];
       this.loadedServer = this.serversService.getServersById(+this.id);
     });
+
+
+    /*Geting the server from the resolver gard class. Code above is no longer necessary*/
+    this.route.data.subscribe((data: Data) => {
+      this.loadedServer = data['server'];
+    });
+
+
   }
 
   editServerSelected() {
