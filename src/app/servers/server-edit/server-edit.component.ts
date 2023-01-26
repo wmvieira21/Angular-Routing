@@ -8,7 +8,7 @@ import { CanComponentDeactivate } from './can-deactivate-guard-service';
   selector: 'app-server-edit',
   templateUrl: './server-edit.component.html',
   styleUrls: ['./server-edit.component.css'],
-  providers: [ServersService]
+  providers: []
 })
 export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
@@ -21,6 +21,7 @@ export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeact
   fragmentSubscription = new Subscription();
   allowEdit = false;
   savedChanges = false;
+  id = 0;
 
   constructor(private route: ActivatedRoute, private serversService: ServersService, private router: Router) { }
 
@@ -37,10 +38,12 @@ export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeact
     this.fragmentSubscription = this.route.fragment.subscribe();
 
     /*+ indica que o id é um number*/
-    this.getServerById(+this.route.snapshot.params['id']);
+    this.id = +this.route.snapshot.params['id'];
+    this.getServerById(this.id);
 
     this.route.params.subscribe((param) => {
-      this.getServerById(param['id']);
+      this.id = +param['id'];
+      this.getServerById(this.id);
     }
     );
   }
@@ -51,6 +54,9 @@ export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   updateServer() {
     this.savedChanges = true;
+    this.serversService.updateServer(this.id, { nmServer: this.serverNameEdit });
+
+    this.serversService.serversChanged.emit();
     this.router.navigate(['../'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
   }
 
@@ -59,7 +65,7 @@ export class ServerEditComponent implements OnInit, OnDestroy, CanComponentDeact
     if (!this.allowEdit) {
       return true;
     }
-    
+
     if (this.serverNameEdit !== this.serverLoaded.serverName
       && !this.savedChanges) {
       return confirm('Are you sure you want to exit?');

@@ -6,7 +6,7 @@ import { ServersService } from './servers.service';
   selector: 'app-servers',
   templateUrl: './servers.component.html',
   styleUrls: ['./servers.component.css'],
-  providers: [ServersService]
+  providers: []
 })
 export class ServersComponent implements OnInit {
   serversLocal: { serverName: string, id: number, status: string }[] = [];
@@ -21,5 +21,8 @@ export class ServersComponent implements OnInit {
 
   ngOnInit(): void {
     this.serversLocal = this.serversService.getServers();
+    this.serversService.serversChanged.subscribe(
+      this.serversLocal = this.serversService.getServers()
+    )
   }
 }

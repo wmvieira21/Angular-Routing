@@ -1,4 +1,9 @@
+import { EventEmitter } from "@angular/core";
+
 export class ServersService {
+
+    serversChanged = new EventEmitter();
+
     private servers: { serverName: string, id: number, status: string }[] = [
         { serverName: 'ServerTest', id: 1, status: 'offline' },
         { serverName: 'ServerProduction', id: 2, status: 'online' },
@@ -13,5 +18,8 @@ export class ServersService {
             return arrayItem.id == id;
         });
         return server;
+    }
+    updateServer(id: number, dados: { nmServer: string }) {
+        this.getServersById(id).serverName = dados.nmServer;
     }
 }
