@@ -39,7 +39,7 @@ const appRouter: Routes = [
     /*Just in case the user enters an unknown URL*/
     //{ path: 'not-found', component: NotFoundComponent },
 
-    /*Static data to route, Data*/
+    /*Static data throght route, Data*/
     { path: 'not-found', component: ErrorComponent, data: { messageRoute: 'Page not found' } },
 
 

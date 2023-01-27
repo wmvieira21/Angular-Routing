@@ -14,16 +14,16 @@ export class ServerComponent implements OnInit {
 
   ngOnInit(): void {
     //this.loadedServer = this.serversService.getServers();
-    this.id = +this.route.snapshot.params['id'];
+    /*this.id = +this.route.snapshot.params['id'];
     this.loadedServer = this.serversService.getServersById(+this.id);
 
     this.route.params.subscribe((param) => {
       this.id = +param['id'];
       this.loadedServer = this.serversService.getServersById(+this.id);
     });
+    */
 
-
-    /*Geting the server from the resolver gard class. Code above is no longer necessary*/
+    /*Geting the server from the resolver guard class. Code above is no longer necessary*/
     this.route.data.subscribe((data: Data) => {
       this.loadedServer = data['server'];
     });
